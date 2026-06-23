@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Last Attempt Dashboard</title>
+
+<style>
+:root{
+    --ink:#0c0a1f;
+    --ink-soft:#3a3660;
+    --violet:#5b3df0;
+    --violet-deep:#2f1f8a;
+    --electric:#00d9c0;
+    --amber:#ffb648;
+    --bg:#f3f1fb;
+    --card:#ffffff;
+    --line:#e7e3f7;
+    --radius:18px;
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+@media (prefers-reduced-motion: reduce){
+    *{
+        animation-duration:.001ms !important;
+        animation-iteration-count:1 !important;
+        transition-duration:.001ms !important;
+    }
+}
+
+body{
+    font-family:'Segoe UI',Arial,sans-serif;
+    background:var(--bg);
+    min-height:100vh;
+    color:var(--ink);
+}
+
+/* ===== Header ===== */
+.header{
+    position:relative;
+    overflow:hidden;
+    text-align:center;
+    padding:18px 15px 15px;
+    background:
+        linear-gradient(120deg,#0c0a1f,#2f1f8a 45%,#5b3df0 75%,#1a1440);
+    background-size:300% 300%;
+    animation:gradientFlow 14s ease-in-out infinite;
+    color:#fff;
+}
+
+@keyframes gradientFlow{
+    0%{background-position:0% 50%;}
+    50%{background-position:100% 50%;}
+    100%{background-position:0% 50%;}
+}
+
+/* drifting glow blobs, looping ambient motion */
+.header::before,
+.header::after{
+    content:"";
+    position:absolute;
+    width:340px;
+    height:340px;
+    border-radius:50%;
+    filter:blur(70px);
+    opacity:.35;
+    z-index:0;
+}
+
+.header::before{
+    background:var(--electric);
+    top:-120px;
+    left:-80px;
+    animation:driftA 9s ease-in-out infinite;
+}
+
+.header::after{
+    background:var(--amber);
+    bottom:-140px;
+    right:-60px;
+    animation:driftB 11s ease-in-out infinite;
+}
+
+@keyframes driftA{
+    0%,100%{ transform:translate(0,0) scale(1); }
+    50%{ transform:translate(60px,40px) scale(1.15); }
+}
+
+@keyframes driftB{
+    0%,100%{ transform:translate(0,0) scale(1); }
+    50%{ transform:translate(-50px,-30px) scale(1.1); }
+}
+
+.header-inner{
+    position:relative;
+    z-index:1;
+}
+
+.eyebrow{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    font-size:12px;
+    font-weight:700;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--electric);
+    background:rgba(0,217,192,.12);
+    border:1px solid rgba(0,217,192,.35);
+    padding:6px 14px;
+    border-radius:999px;
+    margin-bottom:16px;
+}
+
+.eyebrow .dot{
+    width:7px;
+    height:7px;
+    border-radius:50%;
+    background:var(--electric);
+    box-shadow:0 0 0 0 rgba(0,217,192,.6);
+    animation:pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse{
+    0%{ box-shadow:0 0 0 0 rgba(0,217,192,.55); }
+    70%{ box-shadow:0 0 0 9px rgba(0,217,192,0); }
+    100%{ box-shadow:0 0 0 0 rgba(0,217,192,0); }
+}
+
+.header h1{
+    font-size:38px;
+    font-weight:800;
+    letter-spacing:.02em;
+    margin-bottom:8px;
+    background:linear-gradient(90deg,#fff,#cfe8ff 60%,#fff);
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+}
+
+.header p{
+    opacity:.85;
+    font-size:15px;
+}
+
+/* ===== Top Menu ===== */
+.menu{
+    display:flex;
+    justify-content:center;
+    gap:10px;
+    padding:14px 12px;
+    background:rgba(255,255,255,.85);
+    backdrop-filter:blur(10px);
+    position:sticky;
+    top:0;
+    z-index:1000;
+    box-shadow:0 2px 16px rgba(47,31,138,.08);
+    border-bottom:1px solid var(--line);
+}
+
+.menu button{
+    border:none;
+    background:#eef0fc;
+    color:var(--violet-deep);
+    padding:12px 24px;
+    border-radius:12px;
+    cursor:pointer;
+    font-weight:700;
+    font-size:14px;
+    transition:transform .2s ease, background .25s ease, color .25s ease, box-shadow .25s ease;
+}
+
+.menu button:hover{
+    transform:translateY(-2px);
+    background:#dfe2fa;
+}
+
+.menu button.active{
+    background:linear-gradient(120deg,var(--violet),var(--violet-deep));
+    color:#fff;
+    box-shadow:0 8px 18px rgba(91,61,240,.35);
+}
+
+.container{
+    padding:26px 20px 60px;
+    max-width:1200px;
+    margin:auto;
+}
+
+/* ===== Test Cards ===== */
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:18px;
+}
+
+.card-link{
+    text-decoration:none;
+    color:inherit;
+}
+
+.card{
+    position:relative;
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:24px 22px;
+    height:100%;
+    overflow:hidden;
+    box-shadow:0 4px 14px rgba(47,31,138,.06);
+    transition:transform .3s ease, box-shadow .3s ease, border-color .3s ease;
+}
+
+.card::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:linear-gradient(120deg,var(--violet),var(--electric));
+    opacity:0;
+    transition:opacity .3s ease;
+    z-index:0;
+}
+
+.card h3,
+.card p{
+    position:relative;
+    z-index:1;
+}
+
+.card h3{
+    color:var(--violet-deep);
+    margin-bottom:8px;
+    font-size:18px;
+    transition:color .3s ease;
+}
+
+.card p{
+    color:#6b6890;
+    font-size:14px;
+    transition:color .3s ease;
+}
+
+.card:hover{
+    transform:translateY(-7px);
+    border-color:transparent;
+    box-shadow:0 16px 30px rgba(91,61,240,.28);
+}
+
+.card:hover::before{
+    opacity:1;
+}
+
+.card:hover h3,
+.card:hover p{
+    color:#fff;
+}
+
+/* ===== Subject Sections ===== */
+.subject-card{
+    background:var(--card);
+    padding:22px;
+    border-radius:var(--radius);
+    margin-bottom:18px;
+    border:1px solid var(--line);
+    box-shadow:0 4px 14px rgba(47,31,138,.06);
+}
+
+.subject-title{
+    margin-bottom:15px;
+    color:var(--violet-deep);
+    font-size:18px;
+}
+
+.topic-list{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+}
+
+.topic-link{
+    text-decoration:none;
+}
+
+.topic{
+    position:relative;
+    overflow:hidden;
+    background:#eef0fc;
+    color:var(--violet-deep);
+    padding:10px 16px;
+    border-radius:30px;
+    font-size:14px;
+    font-weight:600;
+    transition:transform .25s ease, color .25s ease, background .25s ease;
+}
+
+.topic::after{
+    content:"";
+    position:absolute;
+    top:0;
+    left:-60%;
+    width:40%;
+    height:100%;
+    background:linear-gradient(120deg,transparent,rgba(255,255,255,.65),transparent);
+    transform:skewX(-20deg);
+}
+
+.topic:hover{
+    background:linear-gradient(120deg,var(--violet),var(--violet-deep));
+    color:#fff;
+    transform:translateY(-2px);
+}
+
+.topic:hover::after{
+    animation:shimmer .9s ease forwards;
+}
+
+@keyframes shimmer{
+    to{ left:130%; }
+}
+
+/* ===== Marathon ===== */
+iframe{
+    width:100%;
+    height:80vh;
+    border:0px;
+    border-radius:var(--radius);
+    background:white;
+    box-shadow:0 0px 0px 0px;
+}
+
+/* ===== Mobile ===== */
+@media(max-width:600px){
+
+.header{
+    padding:34px 14px 30px;
+}
+
+.header h1{
+    font-size:26px;
+}
+
+.menu{
+    gap:6px;
+}
+
+.menu button{
+    flex:1;
+    padding:10px;
+    font-size:13px;
+}
+
+.container{
+    padding:18px 14px 44px;
+}
+
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+    <div class="header-inner">
+        <span class="eyebrow"><span class="dot"></span>LAST ATTEMPT</span>
+      <strong> <em><p>Practice Like Its Your Last Chance</p></em> </strong>
+    </div>
+</div>
+
+<div class="menu">
+    <button class="active" onclick="showSection('tests',this)">Tests</button>
+    <button onclick="showSection('topics',this)">Topic Wise</button>
+    <button onclick="showSection('marathon',this)">Marathon</button>
+</div>
+
+<div class="container">
+
+    <!-- TESTS -->
+    <div id="tests">
+
+        <div class="grid">
+
+            <a href="ssc-cgl.html" class="card-link">
+                <div class="card">
+                    <h3>SSC CGL</h3>
+                    <p>Full Mock Tests, PYQs, Sectional Tests</p>
+                </div>
+            </a>
+
+            <a href="ssc-chsl.html" class="card-link">
+                <div class="card">
+                    <h3>SSC CHSL</h3>
+                    <p>Full Mock Tests, PYQs, Sectional Tests</p>
+                </div>
+            </a>
+
+            <a href="ssc-cpo.html" class="card-link">
+                <div class="card">
+                    <h3>SSC CPO</h3>
+                    <p>Full Mock Tests, PYQs, Sectional Tests</p>
+                </div>
+            </a>
+
+            <a href="ssc-mts.html" class="card-link">
+                <div class="card">
+                    <h3>SSC MTS</h3>
+                    <p>Full Mock Tests, PYQs, Sectional Tests</p>
+                </div>
+            </a>
+
+            <a href="ssc-mts.html" class="card-link">
+                <div class="card">
+                    <h3>SSC JE</h3>
+                    <p>Full Mock Tests, PYQs, Sectional Tests</p>
+                </div>
+            </a>
+
+            <a href="ssc-mts.html" class="card-link">
+                <div class="card">
+                    <h3>SSC CPO</h3>
+                    <p>Full Mock Tests, PYQs, Sectional Tests</p>
+                </div>
+            </a>
+
+            <a href="ssc-mts.html" class="card-link">
+                <div class="card">
+                    <h3>SSC Steno</h3>
+                    <p>Full Mock Tests, PYQs, Sectional Tests</p>
+                </div>
+            </a>
+
+            <a href="ssc-mts.html" class="card-link">
+                <div class="card">
+                    <h3>SSC Section Phase</h3>
+                    <p>Full Mock Tests, PYQs, Sectional Tests</p>
+                </div>
+            </a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            
+
+        </div>
+
+    </div>
+
+    <!-- TOPICS -->
+    <div id="topics" style="display:none;">
+
+        <div class="subject-card">
+            <h2 class="subject-title">📘 English</h2>
+
+            <div class="topic-list">
+
+                <a href="#" class="topic-link"><div class="topic"> Coming Soon</div></a>
+
+               <a href="#" class="topic-link"><div class="topic"> Coming Soon</div></a>
+
+
+            </div>
+        </div>
+
+        <div class="subject-card">
+            <h2 class="subject-title">🔢 Quantitative Aptitude</h2>
+
+            <div class="topic-list">
+
+                <a href="#" class="topic-link"><div class="topic"> Coming Soon</div></a>
+
+               <a href="#" class="topic-link"><div class="topic"> Coming Soon</div></a>
+
+            </div>
+        </div>
+
+        <div class="subject-card">
+            <h2 class="subject-title">🧠 Reasoning</h2>
+
+            <div class="topic-list">
+
+                <a href="#" class="topic-link"><div class="topic"> Coming Soon</div></a>
+
+               <a href="#" class="topic-link"><div class="topic"> Coming Soon</div></a>
+
+            </div>
+        </div>
+
+        <div class="subject-card">
+            <h2 class="subject-title">📰 Current Affairs</h2>
+
+            <div class="topic-list">
+
+              <a href="#" class="topic-link"><div class="topic"> Coming Soon</div></a>
+
+               <a href="#" class="topic-link"><div class="topic"> Coming Soon</div></a>
+
+            </div>
+        </div>
+
+    </div>
+
+    <!-- MARATHON -->
+    <div id="marathon" style="display:none;">
+
+        <!-- Replace URL with your marathon page -->
+        <iframe src="https://forsscprepare-ui.github.io/Marathon/"></iframe>
+
+    </div>
+
+</div>
+
+<script>
+
+function showSection(section, btn){
+
+    document.getElementById('tests').style.display='none';
+    document.getElementById('topics').style.display='none';
+    document.getElementById('marathon').style.display='none';
+
+    document.getElementById(section).style.display='block';
+
+    document.querySelectorAll('.menu button').forEach(button=>{
+        button.classList.remove('active');
+    });
+
+    btn.classList.add('active');
+}
+
+</script>
+
+</body>
+</html>
+z
