@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Last Attempt — SSC Exam Preparation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --night:#11151C;
+    --night-2:#171C25;
+    --paper:#F4F1EA;
+    --paper-dim:#A9ABA0;
+    --ember:#E8A23A;
+    --ember-soft:#E8A23A22;
+    --line:rgba(244,241,234,0.12);
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+
+  body{
+    background:var(--night);
+    color:var(--paper);
+    font-family:'Inter', sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:0.01ms !important; transition-duration:0.01ms !important; scroll-behavior:auto !important;}
+  }
+
+  h1,h2,h3,.serif{font-family:'Fraunces', serif;}
+
+  a{color:inherit; text-decoration:none;}
+  ::selection{background:var(--ember); color:var(--night);}
+  :focus-visible{outline:2px solid var(--ember); outline-offset:3px;}
+
+  .wrap{max-width:980px; margin:0 auto; padding:0 28px;}
+
+  /* nav */
+  header{
+    padding:26px 0;
+  }
+  nav{
+    display:flex; align-items:center; justify-content:space-between;
+    max-width:980px; margin:0 auto; padding:0 28px;
+  }
+  .brand{
+    font-family:'Fraunces', serif;
+    font-size:19px;
+    font-weight:600;
+    letter-spacing:0.01em;
+  }
+  .nav-cta{
+    font-size:13.5px;
+    font-weight:600;
+    color:var(--ember);
+    border:1px solid var(--ember);
+    padding:9px 18px;
+    border-radius:30px;
+    transition:background 0.2s ease, color 0.2s ease;
+  }
+  .nav-cta:hover{background:var(--ember); color:var(--night);}
+
+  /* hero */
+  .hero{
+    padding:70px 0 90px;
+    text-align:center;
+  }
+  .hero-glow{
+    position:relative;
+  }
+  .hero-glow::before{
+    content:"";
+    position:absolute;
+    top:-120px; left:50%;
+    transform:translateX(-50%);
+    width:600px; height:400px;
+    background:radial-gradient(ellipse at center, var(--ember-soft) 0%, transparent 70%);
+    pointer-events:none;
+    z-index:0;
+  }
+
+  .hero h1{
+    position:relative;
+    font-size:clamp(34px, 6vw, 56px);
+    line-height:1.18;
+    font-weight:600;
+    max-width:760px;
+    margin:0 auto;
+  }
+  .hero h1 em{
+    font-style:italic;
+    color:var(--ember);
+  }
+
+  .hero p{
+    position:relative;
+    margin:24px auto 0;
+    max-width:480px;
+    font-size:16.5px;
+    line-height:1.65;
+    color:var(--paper-dim);
+  }
+
+  .hero-actions{
+    position:relative;
+    margin-top:38px;
+    display:flex; flex-direction:column; align-items:center; gap:14px;
+  }
+
+  .btn-start{
+    display:inline-flex; align-items:center; gap:10px;
+    background:var(--ember);
+    color:var(--night);
+    font-weight:700;
+    font-size:16px;
+    padding:16px 36px;
+    border-radius:40px;
+    border:none;
+    cursor:pointer;
+    transition:transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow:0 12px 30px -10px rgba(232,162,58,0.5);
+  }
+  .btn-start:hover{transform:translateY(-2px) scale(1.02);}
+  .btn-start svg{transition:transform 0.2s ease;}
+  .btn-start:hover svg{transform:translateX(3px);}
+
+  .hero-note{
+    font-size:13px;
+    color:var(--paper-dim);
+  }
+  .hero-note b{color:var(--paper);}
+
+  /* a quiet line of exams, not boxed, not loud */
+  .exam-line{
+    position:relative;
+    margin-top:50px;
+    padding-top:28px;
+    border-top:1px solid var(--line);
+    font-size:13.5px;
+    color:var(--paper-dim);
+    letter-spacing:0.02em;
+  }
+  .exam-line span{color:var(--paper); font-weight:500;}
+
+  /* jobs section — clickable exam cards */
+  .jobs{
+    padding:90px 0;
+    border-top:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+  }
+  .jobs-head{
+    text-align:center;
+    margin-bottom:54px;
+  }
+  .jobs-head h2{
+    font-size:clamp(26px,4vw,34px);
+    font-weight:600;
+  }
+  .jobs-head p{
+    margin-top:12px;
+    color:var(--paper-dim);
+    font-size:15px;
+  }
+
+  .job-grid{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:16px;
+  }
+  @media (max-width:760px){ .job-grid{grid-template-columns:1fr 1fr;} }
+  @media (max-width:520px){ .job-grid{grid-template-columns:1fr;} }
+
+  .job-card{
+    position:relative;
+    display:block;
+    background:var(--night-2);
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:26px 22px;
+    overflow:hidden;
+    transition:transform 0.22s ease, border-color 0.22s ease, background 0.22s ease;
+  }
+  .job-card:hover{
+    transform:translateY(-4px);
+    border-color:var(--ember);
+    background:#1C2230;
+  }
+  .job-card:hover .job-arrow{
+    opacity:1;
+    transform:translate(0,0);
+  }
+  .job-card:hover .job-glow{ opacity:1; }
+
+  .job-glow{
+    position:absolute;
+    top:-40px; right:-40px;
+    width:140px; height:140px;
+    background:radial-gradient(circle, var(--ember-soft) 0%, transparent 70%);
+    opacity:0;
+    transition:opacity 0.25s ease;
+    pointer-events:none;
+  }
+
+  .job-top{
+    display:flex; align-items:flex-start; justify-content:space-between;
+    position:relative;
+  }
+  .job-code{
+    font-family:'Fraunces', serif;
+    font-size:22px;
+    font-weight:600;
+    color:var(--paper);
+  }
+  .job-arrow{
+    color:var(--ember);
+    opacity:0;
+    transform:translate(-4px,4px);
+    transition:opacity 0.22s ease, transform 0.22s ease;
+  }
+
+  .job-full{
+    margin-top:6px;
+    font-size:13px;
+    color:var(--paper-dim);
+    line-height:1.5;
+  }
+
+  .job-meta{
+    margin-top:18px;
+    padding-top:16px;
+    border-top:1px solid var(--line);
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    font-size:12px;
+    color:var(--paper-dim);
+  }
+  .job-meta b{ color:var(--ember); font-weight:600; }
+
+  /* the why — emotional middle section */
+  .why{
+    padding:90px 0;
+    border-top:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+    background:var(--night-2);
+  }
+  .why-inner{
+    max-width:620px;
+    margin:0 auto;
+    text-align:center;
+  }
+  .why h2{
+    font-size:clamp(24px, 4vw, 32px);
+    font-weight:500;
+    line-height:1.4;
+    color:var(--paper);
+  }
+  .why h2 em{font-style:italic; color:var(--ember);}
+  .why p{
+    margin-top:18px;
+    font-size:15.5px;
+    line-height:1.7;
+    color:var(--paper-dim);
+  }
+
+  /* features — simple, calm, three only */
+  .features{padding:90px 0;}
+  .features-head{
+    text-align:center;
+    margin-bottom:54px;
+  }
+  .features-head h2{
+    font-size:clamp(26px,4vw,34px);
+    font-weight:600;
+  }
+  .features-head p{
+    margin-top:12px;
+    color:var(--paper-dim);
+    font-size:15px;
+  }
+
+  .feature-grid{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:1px;
+    background:var(--line);
+    border:1px solid var(--line);
+    border-radius:16px;
+    overflow:hidden;
+  }
+  @media (max-width:760px){ .feature-grid{grid-template-columns:1fr;} }
+
+  .feature{
+    background:var(--night);
+    padding:38px 30px;
+    transition:background 0.25s ease;
+  }
+  .feature:hover{background:var(--night-2);}
+  .feature .icon{
+    width:42px; height:42px;
+    display:flex; align-items:center; justify-content:center;
+    color:var(--ember);
+    margin-bottom:18px;
+  }
+  .feature h3{
+    font-size:18px;
+    font-weight:600;
+    font-family:'Inter', sans-serif;
+    margin-bottom:8px;
+  }
+  .feature p{
+    font-size:13.5px;
+    line-height:1.6;
+    color:var(--paper-dim);
+  }
+
+  /* final cta */
+  .final{
+    padding:100px 0 90px;
+    text-align:center;
+    position:relative;
+  }
+  .final::before{
+    content:"";
+    position:absolute;
+    top:0; left:50%; transform:translateX(-50%);
+    width:500px; height:300px;
+    background:radial-gradient(ellipse at center, var(--ember-soft) 0%, transparent 70%);
+    z-index:0;
+  }
+  .final h2{
+    position:relative;
+    font-size:clamp(28px,5vw,42px);
+    font-weight:600;
+    line-height:1.2;
+    max-width:560px;
+    margin:0 auto;
+  }
+  .final h2 em{font-style:italic; color:var(--ember);}
+  .final p{
+    position:relative;
+    margin:18px auto 34px;
+    color:var(--paper-dim);
+    font-size:15px;
+    max-width:420px;
+  }
+
+  /* footer */
+  footer{
+    padding:40px 0 32px;
+    border-top:1px solid var(--line);
+  }
+  .footer-inner{
+    display:flex; flex-direction:column; align-items:center; gap:22px;
+    text-align:center;
+  }
+  .footer-brand{
+    font-family:'Fraunces', serif;
+    font-size:17px;
+    font-weight:600;
+  }
+  .footer-tag{
+    font-size:13px;
+    color:var(--paper-dim);
+    margin-top:4px;
+  }
+
+  .play-badge{
+    display:inline-flex; align-items:center; gap:11px;
+    background:#000;
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:9px 18px 9px 14px;
+    transition:transform 0.2s ease, border-color 0.2s ease;
+  }
+  .play-badge:hover{transform:translateY(-2px); border-color:var(--ember);}
+  .play-badge svg{width:24px; height:24px; flex-shrink:0;}
+  .play-badge .pb-text{display:flex; flex-direction:column; line-height:1.1; text-align:left;}
+  .play-badge .pb-small{font-size:9.5px; color:#cfd2d8;}
+  .play-badge .pb-big{font-size:15px; font-weight:600; color:#fff; margin-top:2px;}
+
+  .footer-bottom{
+    font-size:12px;
+    color:var(--paper-dim);
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <nav>
+    <div class="brand">Last Attempt</div>
+    <a href="#start" class="nav-cta">Get App</a>
+  </nav>
+</header>
+
+<main>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="wrap hero-glow">
+      <h1>Give Your<br><em>Last Attempt</em> <br>With Us.</h1>
+      <p>Honest, exam-pattern practice for SSC CGL, CHSL, CPO, MTS, GD and Steno — built for the quiet hours you put in when no one's watching.</p>
+
+      <div class="hero-actions">
+        <button class="btn-start" id="start" onclick="document.getElementById('jobs').scrollIntoView({behavior:'smooth'})">
+          Start Now
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+        </button>
+        <div class="hero-note">Free to start · No card needed</div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- WHY -->
+
+
+  <!-- JOBS / EXAMS -->
+  <section class="jobs" id="jobs">
+    <div class="wrap">
+      <div class="jobs-head">
+        <h2>Pick your exam</h2>
+        <p>Each one has its own pattern, its own pace. Choose where you're headed.</p>
+      </div>
+
+      <div class="job-grid">
+        <a class="job-card" href="cgl.html">
+          <div class="job-glow"></div>
+          <div class="job-top">
+            <div>
+              <div class="job-code">SSC CGL</div>
+              <div class="job-full">Combined Graduate Level</div>
+            </div>
+            <svg class="job-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+          </div>
+          <div class="job-meta"><span>Tier I · Tier II</span><b>Practice now</b></div>
+        </a>
+
+        <a class="job-card" href="chsl.html">
+          <div class="job-glow"></div>
+          <div class="job-top">
+            <div>
+              <div class="job-code">SSC CHSL</div>
+              <div class="job-full">Combined Higher Secondary Level</div>
+            </div>
+            <svg class="job-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+          </div>
+          <div class="job-meta"><span>Tier I · Tier II</span><b>Practice now</b></div>
+        </a>
+
+        <a class="job-card" href="cpo.html">
+          <div class="job-glow"></div>
+          <div class="job-top">
+            <div>
+              <div class="job-code">SSC CPO</div>
+              <div class="job-full">Central Police Organisation</div>
+            </div>
+            <svg class="job-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+          </div>
+          <div class="job-meta"><span>Paper I</span><b>Practice now</b></div>
+        </a>
+
+        <a class="job-card" href="mts.html">
+          <div class="job-glow"></div>
+          <div class="job-top">
+            <div>
+              <div class="job-code">SSC MTS</div>
+              <div class="job-full">Multi-Tasking Staff</div>
+            </div>
+            <svg class="job-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+          </div>
+          <div class="job-meta"><span>Tier I</span><b>Practice now</b></div>
+        </a>
+
+        <a class="job-card" href="gd.html">
+          <div class="job-glow"></div>
+          <div class="job-top">
+            <div>
+              <div class="job-code">SSC GD</div>
+              <div class="job-full">General Duty Constable</div>
+            </div>
+            <svg class="job-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+          </div>
+          <div class="job-meta"><span>Tier I</span><b>Practice now</b></div>
+        </a>
+
+        <a class="job-card" href="steno.html">
+          <div class="job-glow"></div>
+          <div class="job-top">
+            <div>
+              <div class="job-code">SSC Steno</div>
+              <div class="job-full">Stenographer Grade C &amp; D</div>
+            </div>
+            <svg class="job-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+          </div>
+          <div class="job-meta"><span>Tier I</span><b>Practice now</b></div>
+        </a>
+
+
+<a class="job-card" href="steno.html">
+          <div class="job-glow"></div>
+          <div class="job-top">
+            <div>
+              <div class="job-code">SSC JE</div>
+              <div class="job-full">Junior Engineer &amp; D</div>
+            </div>
+            <svg class="job-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+          </div>
+          <div class="job-meta"><span>Tier I · Tier II</span><b>Practice now</b></div>
+        </a>
+
+
+          <a class="job-card" href="steno.html">
+          <div class="job-glow"></div>
+          <div class="job-top">
+            <div>
+              <div class="job-code">SSC Selection Posts</div>
+              <div class="job-full">Phase-wise (IX, X, XI…) &amp; D</div>
+            </div>
+            <svg class="job-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+          </div>
+          <div class="job-meta"><span>Tier I</span><b>Practice now</b></div>
+        </a>
+
+
+
+
+
+
+
+
+          
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section class="features" id="features">
+    <div class="wrap">
+      <div class="features-head">
+        <h2>Practice the way you'll be tested</h2>
+        <p>Three simple ways to prepare. No clutter, no distractions.</p>
+      </div>
+
+      <div class="feature-grid">
+        <div class="feature">
+          <div class="icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15.5 14"/></svg>
+          </div>
+          <h3>Full Mock Tests</h3>
+          <p>Sit the complete paper, on the clock, exactly as it'll feel on exam day.</p>
+        </div>
+                  <div class="feature">
+          <div class="icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+  <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
+  <line x1="8" y1="21" x2="16" y2="21"/>
+  <line x1="12" y1="17" x2="12" y2="21"/>
+</svg>
+
+          </div>
+          <h3>Sectional Tests</h3>
+          <p>Real past papers and section-by-section drills to sharpen each weak spot.</p>
+        </div>
+        <div class="feature">
+          <div class="icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+          </div>
+          <h3>PYQs</h3>
+          <p>Real past papers and section-by-section drills to sharpen each weak spot.</p>
+        </div>
+        <div class="feature">
+          <div class="icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+          </div>
+          <h3>Marathon </h3>
+          <p>Build stamina with long sessions, or zero in on one topic until it sticks.</p>
+        </div>
+                 <div class="feature">
+          <div class="icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20M4 19.5A2.5 2.5 0 0 0 6.5 22H20V6a2 2 0 0 0-2-2H6.5a2.5 2.5 0 0 0-2.5 2.5Z"/>
+</svg>
+
+          </div>
+          <h3>Topic-wise Tests</h3>
+          <p>Build stamina with long sessions, or zero in on one topic until it sticks.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- FINAL CTA -->
+  <section class="final">
+    <div class="wrap">
+      <h2>There's no <em>next time</em> built into this plan.<br>Just this one — done properly.</h2>
+      <p>Start a free test now and see exactly where you stand.</p>
+      <button class="btn-start" onclick="document.getElementById('jobs').scrollIntoView({behavior:'smooth'})">
+        Start Now
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+      </button>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap footer-inner">
+    <div>
+      <div class="footer-brand">Last Attempt</div>
+      <div class="footer-tag">Practice like the result already matters.</div>
+    </div>
+
+    <a href="#" class="play-badge" aria-label="Get it on Google Play">
+      <svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+        <path fill="#00d2ff" d="M325.3 234.3L104.6 13l280.8 161.2-60.1 60.1z"/>
+        <path fill="#00f076" d="M44.4 0c-7.4 4.1-12.4 11.8-12.4 21.6v468.8c0 9.8 5 17.5 12.4 21.6l254.5-256-254.5-256z"/>
+        <path fill="#ffce00" d="M404.5 234.4l-58.6-33.7-65.4 65.3 65.4 65.3 59-33.9c17.6-10.1 17.6-33 0-43z"/>
+        <path fill="#ff3a44" d="M104.6 499l280.8-161.2-60.1-60.1L104.6 499z"/>
+      </svg>
+      <span class="pb-text">
+        <span class="pb-small">Download Our App</span>
+        <span class="pb-big">Click Here</span>
+      </span>
+    </a>
+
+    <div class="footer-bottom">© 2026 Last Attempt. All rights reserved.</div>
+  </div>
+</footer>
+
+</body>
+</html>
